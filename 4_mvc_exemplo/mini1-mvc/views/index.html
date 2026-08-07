@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="PT-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Mini 1 MVC</title>
+</head>
+<body>
+    <h1>Lista de Itens</h1>
+
+    <input id="busca" placeholder="Buscar">
+    <button id ="botaoBuscar">Buscar</button>
+
+    <ul id="lista"></ul>
+
+    <script>
+        async function buscarItens() {
+            const termo = document.getElementById('busca').value;
+            const lista = document.getElementById('lista');
+
+            const itens = await fetch(
+                'api/itens?busca=' + encodeURIComponent(termo)
+            );
+
+            lista.innerHTML = itens
+                .map(item => `<li>${item.nome}</li>`)
+                .join('');
+        }
+
+        document
+            .getElementById('botaoBuscar')
+            .addEventListener('click', buscarItens);
+
+        buscarItens();
+    </script>
+</body>
+</html>
